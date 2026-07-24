@@ -1,0 +1,31 @@
+h1 {
+    color: red;
+    font-family: Verdana;
+}
+p {
+    color: rgb(45, 44, 44);
+    font-family: Verdana;
+}
+h2 {
+    font-weight: normal;
+    color: rgb(89, 89, 89);
+    font-family: Verdana;
+}
+
+/* Adiciona espaço entre as palavras
+onde a classe text2 está adicionada */
+.word-spacing {
+    word-spacing: 30px;
+}
+
+/* Adiciona espços entre letras
+onde a classe text3 está adicionada */
+.letter-spacing {
+    letter-spacing: 10px;
+}
+
+/* Adiciona espços entre as linhas
+onde a classe text4 está adicionada */
+.line-height {
+    line-height: 40px;
+}
