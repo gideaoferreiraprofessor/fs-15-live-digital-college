@@ -1,0 +1,21 @@
+
+.card {
+    background-color: rgb(140, 76, 230);
+    width: 300px;
+    border-radius: 15px;
+    padding: 20px 20px 20px 20px;
+    margin: 0 0 20px 0;
+}
+
+.card h4 {
+    color: white;
+    margin: 0 0 0 0;
+    font-size: 30px;
+    font-family: 'Lucida Sans';
+}
+
+.card p {
+    color: white;
+    margin: 20px 0 0 0;
+    font-family: 'Lucida Sans';
+}
