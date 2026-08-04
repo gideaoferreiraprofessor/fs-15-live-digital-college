@@ -1,19 +1,45 @@
-body {
-    background-color: black;
+* {
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: rgb(135, 136, 138);
+}
+.new-price {
+    font-weight: bold;
+}
+
 .menu {
-    background-color: white;
-    width: 1440px;
+    background-color: rgb(255, 240, 36);
+    width: 1200px;
     margin: 0 auto 0 auto;
     padding: 16px 26px 16px 26px;
-
+    
 
     display: flex;
     gap: 50px;
     align-items: center; /* Alinha os itens ao centro (horizontal) */
+    justify-content: space-between;
+}
+
+.menu .menu-left {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.menu .menu-right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
 }
 
 .menu nav {
@@ -38,5 +64,93 @@ body {
     border-radius: 4px;
     padding: 12px 24px;
     background-color: white;
+    cursor: pointer;
+}
+
+main {
+    width: 1200px;
+    margin: 20px auto 0 auto;
+}
+
+main .most-viewd .cards-most-viewd {
+    margin: 10px 0 0 0;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+main .most-viewd .cards-most-viewd .product-card {
+    width: 200px;
+}
+
+main .most-viewd .cards-most-viewd .product-card .product-img img {
+    width: 100%;
+}
+
+main .most-viewd .cards-most-viewd .product-card .product-brand {
+    margin: 15px 0 0 0;
+    font-weight: bold;
+}
+
+main .most-viewd .cards-most-viewd .product-card .product-name {
+    color: rgb(135, 136, 138);
+}
+
+.ad-cupoms {
+    display: flex;
+    width: 1200px;
+    margin: 20px auto 0 auto;
+    justify-content: space-between;
+    border: solid 4px black;
+    border-radius: 10px;
+}
+.ad-cupoms .ad-cupoms-left {
+    padding: 30px;
+    width: 50%;
+}
+
+.ad-cupoms .ad-cupoms-left h3 {
+    font-size: 30px;
+}
+
+.ad-cupoms .ad-cupoms-left .ad-cupoms-text {
+    font-size: 30px;
+}
+
+.ad-cupoms .ad-cupoms-right {
+    padding: 30px;
+    background-color: black;
+    width: 50%;
+}
+
+.ad-cupoms .ad-cupoms-right p {
+    color: white;
+    text-align: center;
+    margin: 10px 0 0 0;
+}
+
+.ad-cupoms .ad-cupoms-right .cupom-code {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ad-cupoms .ad-cupoms-right .cupom-code .code {
+    background-color: transparent;
+    color: white;
+    border: dashed 1px white;
+    padding: 10px 15px;
+    border-radius: 30px;
+}
+
+.ad-cupoms .ad-cupoms-right .cupom-code .copy {
+    background-color: transparent;
+    color: white;
+    border: solid 1px white;
+    padding: 10px 15px;
+    border-radius: 30px;
+    min-width: 100px;
     cursor: pointer;
 }
