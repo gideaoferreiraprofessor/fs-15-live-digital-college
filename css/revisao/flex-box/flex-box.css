@@ -1,0 +1,22 @@
+.box-pai {
+    width: 1000px;
+    margin: 0 auto 0 auto;
+    background-color: black;
+
+    padding: 20px 20px 20px 20px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.box-pai .box-filho-1 {
+    width: 400px;
+    height: 350px;
+    background-color: red;
+}
+
+.box-pai .box-filho-2 {
+    background-color: yellow;
+    width: 400px;
+    height: 350px;
+}
