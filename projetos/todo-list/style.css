@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: rgb(50, 50, 50);
+}
+
+button {
+    cursor: pointer;
+    border-radius: 2px;
+    border: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px rgb(245, 225, 225);
+    padding: 6px 6px;
+}
+
+header .menu a {
+    text-decoration: none;
+    padding: 4px 8px;
+}
+
+header .menu a:hover {
+    background-color: rgb(71, 71, 255);
+    color: white;
+    width: 800px;
+}
+
+.profile .email {
+    font-size: 10px;
+}
+
+main {
+    width: 300px;
+    margin: 20px auto 0 auto;
+}
+
+main h2 {
+    text-align: center;
+    margin: 0px 0 20px 0;
+}
+
+main form {
+    width: 250px;
+    margin: 0 auto;
+}
+
+main form .task {
+    display: flex;
+    justify-content: space-between;
+}
+
+main form .task button {
+    padding: 4px 8px;
+    background-color: rgb(59, 155, 240);
+    color: white;
+}
+
+main form .task button:hover {
+    background-color: rgb(24, 94, 192);
+}
+
+main form .task input {
+    border: none;
+    background-color: rgb(241, 241, 241);
+    border-radius: 2px;
+    padding: 0 5px;
+}
+
+main form .task input:focus {
+    border: none;
+    outline: none;
+}
+
+main .tasks {
+    width: 250px;
+    margin: 10px auto 0 auto;
+}
+
+main .tasks .task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3px 0;
+    padding: 3px 3px;
+    border-radius: 2px;
+}
+
+main .tasks .task-item:hover {
+    background-color: rgb(247, 247, 247);
+}
+
+main .tasks .task-item .actions .check {
+    background-color: rgb(182, 235, 125);
+}
+
+main .tasks .task-item .actions .delete {
+    background-color: rgb(235, 125, 125);
+}
+
+main .tasks .task-item .content p {
+    font-size: 12px;
+}
