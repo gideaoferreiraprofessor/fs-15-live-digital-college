@@ -46,8 +46,8 @@ let resultado = a / b; // resultado será 5
 
 # Resto da Divisão
 
-O operador de resto da divisão é representado pelo símbolo `%` e é utilizado para obter o resto da
-divisão de um valor por outro.
+O operador de resto da divisão é representado pelo símbolo `%` e é utilizado para
+obter o resto da divisão de um valor por outro.
 
 ```javascript
 let a = 10;
