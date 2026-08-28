@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css"
+        integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>To-Do List</title>
+</head>
+<body>
+    <h3 class="text-center mt-5">Lista de tarefas</h3>
+    <div class="mt-5">
+        <form id="form-task"  style="width: 400px; margin: 0 auto;">
+            <div class="input-group">
+                <input class="form-control" type="text" id="input-task" placeholder="Digite uma tarefa">
+                <button class="btn btn-success" id="btn-add-task" type="button">Adicionar</button>
+            </div>
+        </form>
+
+        <table class="table table-striped mt-5"  style="width: 600px; margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th scope="col">Tarefa</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="list-task">
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js"
+        integrity="sha512-nKXmKvJyiGQy343jatQlzDprflyB5c+tKCzGP3Uq67v+lmzfnZUi/ZT+fc6ITZfSC5HhaBKUIvr/nTLCV+7F+Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+</html>
