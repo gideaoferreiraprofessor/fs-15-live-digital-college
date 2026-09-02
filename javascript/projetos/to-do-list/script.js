@@ -1,17 +1,17 @@
 const btnAddTask = document.getElementById("btn-add-task")
 const tBody = document.getElementById("list-task")
+const btnTaskDoneConfirm = document.getElementById("btnTaskDoneConfirm")
 const tasks = []
 
 // Função criada para excluir um elemento do nosso array
 function deleteTask(index) {
-    console.log(tasks)
     tasks.splice(index, 1)
     localStorage.setItem("tasks", JSON.stringify(tasks))
-     tBody.innerHTML = ""
+    tBody.innerHTML = ""
     for (let i = 0; i < tasks.length; i++) {
         const tr = document.createElement("tr")
         const taskTd = document.createElement("td")
-
+        const tdStatusTask = document.createElement("td")
         const actionsTd = document.createElement("td")
         actionsTd.classList.add("d-flex", "gap-1", "justify-content-end")
 
@@ -24,6 +24,9 @@ function deleteTask(index) {
 
         // Criamos um elemento html = button de concluir
         const btnDone = document.createElement("button")
+        btnDone.addEventListener("click", function () {
+            doneTask(tasks[i], i)
+        })
         // Adicionamos o texto no botão = Concluir
         btnDone.innerHTML = "Concluir"
         // Adicionamos o texto as classes css do bootstrap no boão
@@ -43,16 +46,41 @@ function deleteTask(index) {
         // Adicionamos o botão "excluir" elemento filho dentro do td
         actionsTd.appendChild(btnReject)
 
-        taskTd.innerHTML = `${tasks[i]}`
+        taskTd.innerHTML = `${tasks[i].title}`
+        if (tasks[i].status === "doing") {
+            tdStatusTask.innerHTML  = `Em andamento`
+        }
+
+        if (tasks[i].status === "done") {
+            tdStatusTask.innerHTML = `Concluida`
+        }
 
         // Adicionamos a td de atividade a tr - linha
         tr.appendChild(taskTd)
+        tr.appendChild(tdStatusTask)
         // Adicionamos a td com os botões de ação a tr - linha
         tr.appendChild(actionsTd)
         // Adicionamos a linha ao tbody da tabela
         tBody.appendChild(tr)
     }
     
+}
+
+function doneConfirm(taskIndex) {
+    console.log(taskIndex)
+}
+
+
+function doneTask(task, taskIndex) {
+    const taskTitle = document.getElementById("taskDoneModalContent")
+    const doneModal = document.getElementById("taskDoneModal")
+    taskTitle.innerHTML = task.title
+    const modal = new bootstrap.Modal(doneModal)
+    modal.show()
+
+    btnTaskDoneConfirm.addEventListener("click", function () {
+        doneConfirm(taskIndex)
+    })
 }
 
 // Pega os dados do localstorage para listar todos as atividades sempre que a página carregar
@@ -66,6 +94,7 @@ if (tasksLocalStorage && tasksLocalStorage.length > 0) {
     for (let i = 0; i < tasksLocalStorage.length; i++) {
         const tr = document.createElement("tr")
         const tdTask = document.createElement("td")
+        const tdStatusTask = document.createElement("td")
 
         const actionsTd = document.createElement("td")
         actionsTd.classList.add("d-flex", "gap-1", "justify-content-end")
@@ -79,6 +108,9 @@ if (tasksLocalStorage && tasksLocalStorage.length > 0) {
 
         // Criamos um elemento html = button de concluir
         const btnDone = document.createElement("button")
+        btnDone.addEventListener("click", function () {
+            doneTask(tasksLocalStorage[i], i)
+        })
         // Adicionamos o texto no botão = Concluir
         btnDone.innerHTML = "Concluir"
         // Adicionamos o texto as classes css do bootstrap no boão
@@ -98,10 +130,20 @@ if (tasksLocalStorage && tasksLocalStorage.length > 0) {
         // Adicionamos o botão "excluir" elemento filho dentro do td
         actionsTd.appendChild(btnReject)
 
-        tdTask.innerHTML = `${tasksLocalStorage[i]}`
+        tdTask.innerHTML = `${tasksLocalStorage[i].title}`
+
+        if (tasksLocalStorage[i].status === "doing") {
+            tdStatusTask.innerHTML  = `Em andamento`
+        }
+
+        if (tasksLocalStorage[i].status === "done") {
+            tdStatusTask.innerHTML = `Concluida`
+        }
+        
 
         // Adicionamos a td de atividade a tr - linha
         tr.appendChild(tdTask)
+        tr.appendChild(tdStatusTask)
         // Adicionamos a td com os botões de ação a tr - linha
         tr.appendChild(actionsTd)
         // Adicionamos a linha ao tbody da tabela
@@ -122,6 +164,7 @@ btnAddTask.addEventListener("click", function () {
     const tr = document.createElement("tr")
     // Criamos um elemento html = td para o nome da task
     const taskTd = document.createElement("td")
+    const tdStatusTask = document.createElement("td")
 
     // Criamos um elemento html = td para os botões de ação
     const actionsTd = document.createElement("td")   
@@ -157,10 +200,19 @@ btnAddTask.addEventListener("click", function () {
 
     // Adicionamos o texto digitado no input ao td na tabela
     taskTd.innerHTML = inputTask.value
+    tdStatusTask.innerHTML  = `Em andamento`
     
     // Adicionamos a atividade ao array de atividades e pegamos o total itens
     // que tem dentro do array para poder calcular qual indece o item foi adicionado
-    const index = tasks.push(inputTask.value)
+    const task = {
+        title: inputTask.value,
+        status: "doing"
+    }
+    const index = tasks.push(task)
+
+    btnDone.addEventListener("click", function () {
+        doneTask(inputTask.value, index - 1)
+    })
 
     // Adicionamos a acação de deletar item ao botão de deletar
     // passando o index do item como paramentro da função
@@ -173,6 +225,7 @@ btnAddTask.addEventListener("click", function () {
 
     // Adicionamos a td de atividade a tr - linha
     tr.appendChild(taskTd)
+    tr.appendChild(tdStatusTask)
     // Adicionamos a td com os botões de ação a tr - linha
     tr.appendChild(actionsTd)
     // Adicionamos a linha ao tbody da tabela
