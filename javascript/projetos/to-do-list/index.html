@@ -33,17 +33,43 @@
         <div class="modal fade" id="taskDoneModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-success text-white">
                         <h5 class="modal-title" id="taskDoneModalLabel">Concluir atividade</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Tem certeza que deseja concluir esta atividade?</p>
-                        <h4 id="taskDoneModalContent"></h4>
+                        <p class="alert alert-warning text-center">Tem certeza que deseja concluir esta atividade?</p>
+                        <h4 class="text-center" id="taskDoneModalContent"></h4>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="btnTaskDoneConfirm">Concluir</button>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="btnTaskDoneConfirm">Concluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="taskEditModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="taskEditModalLabel">Editar atividade</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="alert alert-warning text-center">Tem certeza que deseja editar esta atividade?</p>
+                        <h4 class="text-center" id="taskEditModalContent"></h4>
+                        <form>
+                            <input class="form-control" type="text" id="input-task-edit" placeholder="Digite uma tarefa">
+                            <select name="status" id="select-status" class="form-select mt-3">
+                                <option value="done">Concluído</option>
+                                <option value="doing">Em andamento</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="btnTaskEditConfirm">Editar</button>
                     </div>
                 </div>
             </div>
