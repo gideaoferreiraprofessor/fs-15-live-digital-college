@@ -1,0 +1,57 @@
+@layer primeui;
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('./assets/fonts/satoshi/Satoshi-Regular.otf');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IntegralCF';
+    src: url('./assets/fonts/integra-cf/integral-cf-regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IntegralCF';
+    src: url('./assets/fonts/integra-cf/integral-cf-heavy.ttf');
+    font-weight: 800;
+    font-style: normal;
+}
+
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    /*
+        CORES
+    */
+    --ss-black: #000000;
+    --ss-black-60: rgba(0, 0, 0, 0.6);
+    --ss-white: #ffffff;
+    --ss-gray: #f0f0f0;
+
+    /*
+        TAMANHO DAS FONTES
+    */
+    --ss-default-font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--ss-black);
+    font-family: 'IntegralCF';
+    font-weight: 800;
+}
+
+p {
+    color: var(--ss-black-60);
+    font-size: var(--ss-default-font-size);
+    font-family: 'Satoshi';
+}
