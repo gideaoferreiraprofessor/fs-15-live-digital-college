@@ -42,6 +42,8 @@ body {
         TAMANHO DAS FONTES
     */
     --ss-default-font-size: 16px;
+
+    --background-gray: var(--ss-gray)
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -54,4 +56,14 @@ p {
     color: var(--ss-black-60);
     font-size: var(--ss-default-font-size);
     font-family: 'Satoshi';
+}
+
+ul li {
+    color: var(--ss-black-60);
+    font-size: var(--ss-default-font-size);
+    font-family: 'Satoshi';
+}
+
+.ss-bg-gray {
+    background-color: var(--background-gray);
 }
