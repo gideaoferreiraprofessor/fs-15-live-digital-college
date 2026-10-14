@@ -2,13 +2,14 @@ import "./main.css"
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { PrimeReactProvider } from '@primereact/core';
-import Aura from '@primeuix/themes/aura';
+import Material from '@primeuix/themes/material';
+
 import { RouterProvider } from "react-router";
 import { router } from "./routes/index.jsx";
 
 const primereact = {
   theme: {
-    preset: Aura,
+    preset: Material,
     options: {
       darkModeSelector: 'none',
     }
