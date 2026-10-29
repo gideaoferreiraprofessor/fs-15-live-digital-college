@@ -3,6 +3,7 @@ import morgan from "morgan"
 import cors from "cors"
 import { userListController } from "./constrollers/userListController.js"
 import { productListController } from "./constrollers/productListController.js"
+import initDatabase from "./database/init.js"
 
 // Inicialização do express
 const app = express()
@@ -20,7 +21,9 @@ app.get("/", userListController)
 app.get("/products", productListController)
 
 // Execução do servidor
+
 app.listen(port, () => {
+    initDatabase()
     // Esse console é exibido apenas no terminal
     console.log("Meu servidor está funcionando")
 })

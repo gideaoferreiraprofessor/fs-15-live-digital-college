@@ -1,8 +1,8 @@
 export function userListController(request, response) {
-    return response.json(
-        [
-            { name: "Gideão" },
-            { name: "Leri" }
-        ]
-    )
+  const fakeUsers = [
+    { name: "Gideão" },
+    { name: "Leri" }
+  ]
+
+  return response.json(fakeUsers) 
 }

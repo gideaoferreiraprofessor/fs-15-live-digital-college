@@ -1,8 +1,6 @@
-export function productListController(request, response) {
-    return response.json(
-        [
-            { name: "Tênis Nike" },
-            { name: "Tênis Adidas" }
-        ]
-    )
+import Product from "../models/product.js"
+
+export async function productListController(request, response) {
+  const products = await Product.findAll()
+  return response.json(products)
 }
