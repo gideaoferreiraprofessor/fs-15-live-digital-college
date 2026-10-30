@@ -4,6 +4,7 @@ import cors from "cors"
 import { userListController } from "./constrollers/userListController.js"
 import { productListController } from "./constrollers/productListController.js"
 import initDatabase from "./database/init.js"
+import { productCreateController } from "./constrollers/productCreateController.js"
 
 // Inicialização do express
 const app = express()
@@ -19,6 +20,7 @@ app.use(morgan('combined'))
 // Rotas
 app.get("/", userListController)
 app.get("/products", productListController)
+app.post("/products", productCreateController)
 
 // Execução do servidor
 
