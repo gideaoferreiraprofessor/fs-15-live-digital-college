@@ -2,9 +2,11 @@ import express from "express"
 import morgan from "morgan"
 import cors from "cors"
 import { userListController } from "./constrollers/userListController.js"
-import { productListController } from "./constrollers/productListController.js"
+import productListController from "./constrollers/productListController.js"
 import initDatabase from "./database/init.js"
-import { productCreateController } from "./constrollers/productCreateController.js"
+import productCreateController from "./constrollers/productCreateController.js"
+import productDetailsController from "./constrollers/productDetailsController.js"
+import productUpdateController from "./constrollers/productUpdateController.js"
 
 // Inicialização do express
 const app = express()
@@ -20,6 +22,8 @@ app.use(morgan('combined'))
 // Rotas
 app.get("/", userListController)
 app.get("/products", productListController)
+app.get("/product/:id", productDetailsController)
+app.put("/product/:id", productUpdateController)
 app.post("/products", productCreateController)
 
 // Execução do servidor
