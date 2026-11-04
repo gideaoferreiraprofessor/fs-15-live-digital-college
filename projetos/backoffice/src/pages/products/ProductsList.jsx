@@ -3,15 +3,22 @@ import { DataTable } from '@primereact/ui/datatable';
 import { Button } from '@primereact/ui/button';
 import { Drawer } from '@primereact/ui/drawer';
 import { Times } from '@primeicons/react/times';
+import { ExclamationTriangle } from '@primeicons/react/exclamation-triangle'
 import { Plus } from '@primeicons/react/plus';
 import { Textarea } from '@primereact/ui/textarea';
 import { InputText } from '@primereact/ui/inputtext';
 import { InputNumber } from '@primereact/ui/inputnumber';
 import { Label } from '@primereact/ui/label';
+import { useNavigate } from "react-router";
+import { Dialog } from '@primereact/ui/dialog';
+import { Message } from '@primereact/ui/message';
 
 function ProductsList() {
+  const navigation = useNavigate()
   const [products, setProducts] = useState([])
   const [createProductDrawer, setCreateProductDrawer] = useState(false)
+  const [productIdDelete, setProductIdDelete] = useState()
+  const [toggleDeleteModal, setToggleDeleteModal] = useState(false)
 
   const [name, setName] = useState()
   const [description, setDescription] = useState()
@@ -28,6 +35,20 @@ function ProductsList() {
 
   function openCreateProductDrawer() {
     setCreateProductDrawer(!createProductDrawer)
+  }
+
+  function productDetails(productId) {
+    console.log('Ver produto com o id: ', productId)
+    navigation(`/product/details/${productId}`)
+  }
+
+  function toggleDeleteProductModal() {
+    setToggleDeleteModal(!toggleDeleteModal)
+  }
+
+  function deleteProductModal(id) {
+    setProductIdDelete(id)
+    toggleDeleteProductModal()
   }
 
   async function createProduct() {
@@ -62,6 +83,50 @@ function ProductsList() {
   
   return (
     <>
+      <Dialog.Root open={toggleDeleteModal} onOpenChange={toggleDeleteProductModal}>
+        <Dialog.Portal>
+          <Dialog.Backdrop />
+          <Dialog.Positioner>
+            <Dialog.Popup>
+              <Dialog.Header>
+                <Dialog.Title>Deletar produto</Dialog.Title>
+                <Dialog.HeaderActions>
+                  <Dialog.Close as={Button} onClick={toggleDeleteProductModal}>
+                    <Times/>
+                  </Dialog.Close>
+                </Dialog.HeaderActions>
+              </Dialog.Header>
+              <Dialog.Content>
+                <p className="text-center">
+                  Você está prestes a deletar o produto
+                </p>
+                <Message.Root severity="warn">
+                  <Message.Content>
+                    <Message.Icon>
+                      <ExclamationTriangle />
+                    </Message.Icon>
+                    <Message.Text>
+                      <p>
+                        Esta ação não poderá ser desfeita!
+                      </p>
+                    </Message.Text>
+                  </Message.Content>
+                </Message.Root>
+              </Dialog.Content>
+              <Dialog.Footer>
+                <div className="flex justify-between w-full">
+                  <Button severity="secondary">
+                    Cancelar
+                  </Button>
+                  <Button severity="danger">
+                    Deletar
+                  </Button>
+                </div>
+              </Dialog.Footer>
+            </Dialog.Popup>
+          </Dialog.Positioner>
+        </Dialog.Portal>
+      </Dialog.Root>
       <div>
         <Button onClick={openCreateProductDrawer}>
           <Plus />
@@ -110,8 +175,8 @@ function ProductsList() {
                     {item.stock}
                   </DataTable.Cell>
                   <DataTable.Cell>
-                    <button className="!bg-blue-400 px-3 py-1 rounded cursor-pointer text-white">Editar</button>
-                    <button className="!bg-red-400 px-3 py-1 rounded cursor-pointer text-white">Deletar</button>
+                    <button className="bg-blue-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => productDetails(item.id)}>Ver</button>
+                    <button className="bg-red-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => toggleDeleteProductModal(item.id)}>Deletar</button>
                   </DataTable.Cell>
                 </DataTable.Row>
               )}
