@@ -1,10 +1,15 @@
 import { Button } from "@primereact/ui/button";
+import { Check } from '@primeicons/react/check';
+import { toast } from '@primereact/ui/toaster';
+import { Toast } from '@primereact/ui/toast';
+import { Toaster } from '@primereact/ui/toaster';
 import { InputNumber } from "@primereact/ui/inputnumber";
 import { InputText } from "@primereact/ui/inputtext";
 import { Label } from "@primereact/ui/label";
 import { Textarea } from "@primereact/ui/textarea";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Times } from "@primeicons/react/times";
 
 function ProductDetails() {
   const params = useParams();
@@ -28,6 +33,7 @@ function ProductDetails() {
   }
 
   async function updateProduct() {
+    console.log(description)
     const product = {
       name: name,
       description: description,
@@ -43,17 +49,47 @@ function ProductDetails() {
       }
     })
 
-    const response = await request.json()
+    await request.json()
 
-    console.log(response)
+    toast.success({
+      title: 'Atualização de Produto',
+      description: 'Produto atualizado com sucesso!',
+      group: 'severity',
+      duration: 2000
+    })
   }
 
   useEffect(() => {
+    // eslint-disable-next-line
     getProductById();
-  }, []);
+  },[]);
 
   return (
     <>
+      <Toaster.Root group="severity">
+        <Toaster.Portal>
+          <Toaster.Region>
+            {
+              ({toaster}) => toaster?.toasts.map((toast, index) => (
+                <Toast.Root key={index} toast={toast}>
+                  <Toast.Content>
+                    <Toast.Icon match="success">
+                      <Check /> 
+                    </Toast.Icon>
+                    <Toast.Message>
+                      <Toast.Title />
+                      <Toast.Description />
+                    </Toast.Message>
+                    <Toast.Close>
+                      <Times />
+                    </Toast.Close>
+                  </Toast.Content>
+                </Toast.Root>
+              ))
+            }
+          </Toaster.Region>
+        </Toaster.Portal>
+      </Toaster.Root>
       {productDetails && productDetails.id ? (
         <section className="bg-gray-50 px-5 py-3">
           <h1 className="text-3xl mb-6">Detalhes do produto</h1>
@@ -73,6 +109,7 @@ function ProductDetails() {
                 placeholder="Camisal oficial de alta qualidade para amantes do futebol britânico"
                 className="w-full mt-2"
                 defaultValue={description}
+                onInput={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="mt-5 grid grid-cols-2 w-full gap-4">

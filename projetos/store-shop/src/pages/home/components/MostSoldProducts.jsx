@@ -5,13 +5,43 @@ import Jeans from "../../../assets/images/products/jeans.png"
 import CasualLong from "../../../assets/images/products/casual-long-2.png"
 import ShorJeans from "../../../assets/images/products/short-jeans.png"
 import ProductCard from "../../../components/product/card/ProductCard"
+import { useState } from "react"
+import { useEffect } from "react"
 
 function MostSoldProducts() {
+  const [productsList, setProductsList] = useState([])
+
+  async function fetchProducts() {
+    const limit = 4
+    const request = await fetch(`http://localhost:8001/store/products?limit=${limit}&orderby=ASC`)
+    const response = await request.json()
+    setProductsList(response)
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    fetchProducts()
+  },[])
   return (
       <section>
         <h3 className="text-4xl w-full text-center mt-13 mb-15">MAIS VENDIDOS</h3>
         <div className="flex justify-between gap-4">
-          <ProductCard
+        {
+          productsList && productsList.length > 0 ?
+          productsList.map((product, index) => (
+            <ProductCard
+              key={index}
+              image={TShirtLongsize}
+              productRate={ProductRate}
+              title={product.name}
+              price={product.price}
+            />
+          ))
+            :
+            <p>Productos nao encontrado</p>
+        }
+        
+          {/* <ProductCard
             image={CasualLong}
             productRate={ProductRate}
             title="Camisa Listrada Manga Comprida"
@@ -36,8 +66,7 @@ function MostSoldProducts() {
             productRate={ProductRate}
             title="Calça Jeans Preta Skinny"
             price="210"
-          />
-
+          /> */}
         </div>
         <div className="w-full mt-10 flex justify-center">
           <button className="border rounded-4xl! py-3 px-20 border-gray-300 cursor-pointer">Ver Todos</button>

@@ -17,7 +17,7 @@ function ProductsList() {
   const navigation = useNavigate()
   const [products, setProducts] = useState([])
   const [createProductDrawer, setCreateProductDrawer] = useState(false)
-  const [productIdDelete, setProductIdDelete] = useState()
+  const [productDelete, setProductDelete] = useState({})
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false)
 
   const [name, setName] = useState()
@@ -27,7 +27,7 @@ function ProductsList() {
 
 
   async function listProducts() {
-    const request = await fetch('http://localhost:8001/products')
+    const request = await fetch('http://localhost:8001/products/')
     const response = await request.json()
     setProducts(response)
     console.log(response)
@@ -46,8 +46,9 @@ function ProductsList() {
     setToggleDeleteModal(!toggleDeleteModal)
   }
 
-  function deleteProductModal(id) {
-    setProductIdDelete(id)
+  function deleteProductModal(item) {
+    console.log(item)
+    setProductDelete(item)
     toggleDeleteProductModal()
   }
 
@@ -77,6 +78,25 @@ function ProductsList() {
     }
   }
 
+
+  async function deleteProduct() {
+    try {
+      const request = await fetch(`http://localhost:8001/product/${productDelete.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const response = await request.json()
+
+      toggleDeleteProductModal()
+      await listProducts()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     listProducts()
   }, [])
@@ -97,8 +117,9 @@ function ProductsList() {
                 </Dialog.HeaderActions>
               </Dialog.Header>
               <Dialog.Content>
-                <p className="text-center">
-                  Você está prestes a deletar o produto
+                <p className="text-center my-5">
+                  Você está prestes a deletar o produto: <br />
+                  <span className="text-2xl">{ productDelete.name }</span>
                 </p>
                 <Message.Root severity="warn">
                   <Message.Content>
@@ -106,19 +127,17 @@ function ProductsList() {
                       <ExclamationTriangle />
                     </Message.Icon>
                     <Message.Text>
-                      <p>
-                        Esta ação não poderá ser desfeita!
-                      </p>
+                      Esta ação não poderá ser desfeita!
                     </Message.Text>
                   </Message.Content>
                 </Message.Root>
               </Dialog.Content>
               <Dialog.Footer>
                 <div className="flex justify-between w-full">
-                  <Button severity="secondary">
+                  <Button severity="secondary" onClick={toggleDeleteProductModal}>
                     Cancelar
                   </Button>
-                  <Button severity="danger">
+                  <Button severity="danger" onClick={deleteProduct}>
                     Deletar
                   </Button>
                 </div>
@@ -176,7 +195,7 @@ function ProductsList() {
                   </DataTable.Cell>
                   <DataTable.Cell>
                     <button className="bg-blue-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => productDetails(item.id)}>Ver</button>
-                    <button className="bg-red-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => toggleDeleteProductModal(item.id)}>Deletar</button>
+                    <button className="bg-red-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => deleteProductModal(item)}>Deletar</button>
                   </DataTable.Cell>
                 </DataTable.Row>
               )}
