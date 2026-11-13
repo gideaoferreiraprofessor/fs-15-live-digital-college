@@ -31,7 +31,7 @@ function MostSoldProducts() {
           productsList.map((product, index) => (
             <ProductCard
               key={index}
-              image={TShirtLongsize}
+              image={`http://localhost:8001/assets/products-images/${product.image}`}
               productRate={ProductRate}
               title={product.name}
               price={product.price}

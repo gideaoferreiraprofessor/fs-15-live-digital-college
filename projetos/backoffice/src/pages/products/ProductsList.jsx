@@ -24,6 +24,7 @@ function ProductsList() {
   const [description, setDescription] = useState()
   const [price, setPrice] = useState()
   const [stock, setStock] = useState()
+  const [image, setImage] = useState()
 
 
   async function listProducts() {
@@ -54,20 +55,17 @@ function ProductsList() {
 
   async function createProduct() {
     try {
-      const product = {
-        name: name,
-        description: description,
-        price: price,
-        stock: stock
-      }
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('description', description)
+      formData.append('price', price)
+      formData.append('stock', stock)
+      formData.append('image', image)
 
       await fetch('http://localhost:8001/products',
         {
           method: 'POST',
-          body: JSON.stringify(product),
-          headers: {
-            'Content-Type': 'application/json'
-          }
+          body: formData
         }
       )
 
@@ -229,6 +227,14 @@ function ProductsList() {
                     placeholder="Camisal oficial de alta qualidade para amantes do futebol britânico"
                     className="w-full mt-2"
                     onInput={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div className="mt-5">
+                  <Label>Foto do produto</Label>
+                  <input
+                    type="file"
+                    className="w-full mt-2"
+                    onInput={(e) => setImage(e.target.files[0])}
                   />
                 </div>
                 <div className="mt-5 grid grid-cols-2 w-full gap-4">

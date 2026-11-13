@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "multer": "^2.5.0",
     "react-router": "^8.4.0"
   }
 }
