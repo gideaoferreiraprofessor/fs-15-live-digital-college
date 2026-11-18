@@ -1,6 +1,5 @@
 
 import ProductRate from "../../../assets/images/products/product-rate.png"
-import TShirtLongsize from "../../../assets/images/products/t-shirt-longsize.png"
 import ProductCard from "../../../components/product/card/ProductCard"
 import { NavLink } from "react-router"
 import { useEffect } from "react"
@@ -28,13 +27,15 @@ function NewProducs() {
           {
             productsList && productsList.length > 0 ?
               productsList.map((product, index) => (
-                <ProductCard
-                  key={index}
-                  image={`http://localhost:8001/assets/products-images/${product.image}`}
-                  productRate={ProductRate}
-                  title={product.name}
-                  price={product.price}
-                />
+                <NavLink to={`/produto-detalhes/${product.id}`}>
+                  <ProductCard
+                    key={index}
+                    image={`http://localhost:8001/assets/products-images/${product.image}`}
+                    productRate={ProductRate}
+                    title={product.name}
+                    price={product.price}
+                  />
+                </NavLink>
               ))
               :
               <p>Nenhum produto encontrado</p>

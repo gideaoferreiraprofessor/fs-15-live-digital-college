@@ -11,6 +11,7 @@ import productDeleteController from "./controllers/productDeleteController.js"
 import listController from "./controllers/product/ecommerce/listController.js"
 import { productUpload } from "./assets/multer-config.js"
 import leedsListController from "./controllers/leeds/leedsListController.js"
+import detailsController from "./controllers/product/ecommerce/detailsController.js"
 
 // Inicialização do express
 const app = express()
@@ -26,6 +27,7 @@ app.use("/assets", express.static("assets/uploads"))
 
 // Rotas publicas para o ecommerce
 app.get("/store/products", listController)
+app.get("/store/product/:id", detailsController)
 
 // Rotas ADM
 app.get("/", userListController)

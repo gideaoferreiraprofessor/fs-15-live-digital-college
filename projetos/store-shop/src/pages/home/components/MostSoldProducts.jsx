@@ -1,12 +1,9 @@
 
 import ProductRate from "../../../assets/images/products/product-rate.png"
-import TShirtLongsize from "../../../assets/images/products/t-shirt-longsize-2.png"
-import Jeans from "../../../assets/images/products/jeans.png"
-import CasualLong from "../../../assets/images/products/casual-long-2.png"
-import ShorJeans from "../../../assets/images/products/short-jeans.png"
 import ProductCard from "../../../components/product/card/ProductCard"
 import { useState } from "react"
 import { useEffect } from "react"
+import { NavLink } from "react-router"
 
 function MostSoldProducts() {
   const [productsList, setProductsList] = useState([])
@@ -28,45 +25,20 @@ function MostSoldProducts() {
         <div className="flex justify-between gap-4">
         {
           productsList && productsList.length > 0 ?
-          productsList.map((product, index) => (
-            <ProductCard
-              key={index}
-              image={`http://localhost:8001/assets/products-images/${product.image}`}
-              productRate={ProductRate}
-              title={product.name}
-              price={product.price}
-            />
+            productsList.map((product, index) => (
+            <NavLink to={`/produto-detalhes/${product.id}`}>
+              <ProductCard
+                key={index}
+                image={`http://localhost:8001/assets/products-images/${product.image}`}
+                productRate={ProductRate}
+                title={product.name}
+                price={product.price}
+              />
+              </NavLink>
           ))
             :
             <p>Productos nao encontrado</p>
         }
-        
-          {/* <ProductCard
-            image={CasualLong}
-            productRate={ProductRate}
-            title="Camisa Listrada Manga Comprida"
-            price="232"
-            priceDiscount="212"
-            discount="20"
-          />
-          <ProductCard
-            image={TShirtLongsize}
-            productRate={ProductRate}
-            title="Camiseta Courage Graphic"
-            price="145"
-          />
-          <ProductCard
-            image={ShorJeans}
-            productRate={ProductRate}
-            title="Bermuda Jeans"
-            price="80"
-          />
-          <ProductCard
-            image={Jeans}
-            productRate={ProductRate}
-            title="Calça Jeans Preta Skinny"
-            price="210"
-          /> */}
         </div>
         <div className="w-full mt-10 flex justify-center">
           <button className="border rounded-4xl! py-3 px-20 border-gray-300 cursor-pointer">Ver Todos</button>
