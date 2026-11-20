@@ -3,9 +3,8 @@ import Product from "../../../models/product.js"
 async function listController(request, response) {
   let limit = 10
   let orderBy = 'DESC'
-  const maxLimit = 30
   
-  if (request.query.limit && request.query.limit <= maxLimit) {
+  if (request.query.limit && request.query.limit) {
     limit = Number.parseInt(request.query.limit)
   }
 
@@ -15,7 +14,7 @@ async function listController(request, response) {
 
   const products = await Product.findAll({
     order: [
-      ['createdAt', orderBy]
+      ['id', orderBy]
     ],
     limit: limit,
   })
@@ -24,6 +23,3 @@ async function listController(request, response) {
 }
 
 export default listController
-
-
-// /store/products?limit=100

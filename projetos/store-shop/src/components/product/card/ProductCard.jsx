@@ -1,8 +1,14 @@
 
 function ProductCard({image, productRate, title, price, priceDiscount, discount}) {
   return (
-    <div>
-      <img src={image} alt="" className="rounded-xl mb-3" />
+    <div className="w-full">
+      <div className="w-full h-64 rounded-xl mb-3 overflow-hidden flex items-center justify-center">
+        <img 
+          src={image} 
+          alt={title} 
+          className="w-full h-full object-contain" 
+        />
+      </div>
       <p className="font-semibold! text-black! mb-2">
         {title}
       </p>
