@@ -34,7 +34,7 @@ function MostSoldProducts() {
                 title={product.name}
                 price={product.price}
               />
-              </NavLink>
+            </NavLink>
           ))
             :
             <p>Productos nao encontrado</p>

@@ -1,81 +1,52 @@
 import ProductCard from "../../../components/product/card/ProductCard";
 import ProductRate from "../../../assets/images/products/product-rate.png"
-import TShirtLongsize from "../../../assets/images/products/t-shirt-longsize-2.png"
-import Jeans from "../../../assets/images/products/jeans.png"
-import CasualLong from "../../../assets/images/products/casual-long-2.png"
-import ShorJeans from "../../../assets/images/products/short-jeans.png"
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router"
 
 function ListProducts() {
+
+  const [productsList, setProductsList] = useState([])
+  const limit = 15
+  
+  async function fetchProducts() {
+
+    const request = await fetch(`http://localhost:8001/store/products?limit=${limit}&orderby=DESC`)
+    const response = await request.json()
+    setProductsList(response)
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    fetchProducts()
+  }, [])
+  
+
   return (
     <>
       <div className="w-full">
         <div className="mb-4 flex justify-between">
           <h1>Todos os produtos</h1>
           <div className="flex gap-6">
-            <p className="text-sm!">Mostrando 1-10 de 100 produtos</p>
+            <p className="text-sm!">Mostrando 1 - {limit} de 100 produtos</p>
             <p className="text-sm!">Ordenar por: </p>
           </div>
         </div>
         <div className="flex flex-wrap justify-between gap-5">
-          <ProductCard
-            image={CasualLong}
-            productRate={ProductRate}
-            title="Camisa Listrada Manga Comprida"
-            price="232"
-            priceDiscount="212"
-            discount="20"
-          />
-          <ProductCard
-            image={TShirtLongsize}
-            productRate={ProductRate}
-            title="Camiseta Courage Graphic"
-            price="145"
-          />
-          <ProductCard
-            image={ShorJeans}
-            productRate={ProductRate}
-            title="Bermuda Jeans"
-            price="80"
-          />
-          <ProductCard
-            image={Jeans}
-            productRate={ProductRate}
-            title="Calça Jeans Preta Skinny"
-            price="210"
-          />
-          <ProductCard
-            image={CasualLong}
-            productRate={ProductRate}
-            title="Camisa Listrada Manga Comprida"
-            price="232"
-            priceDiscount="212"
-            discount="20"
-          />
-          <ProductCard
-            image={TShirtLongsize}
-            productRate={ProductRate}
-            title="Camiseta Courage Graphic"
-            price="145"
-          />
-          <ProductCard
-            image={ShorJeans}
-            productRate={ProductRate}
-            title="Bermuda Jeans"
-            price="80"
-          />
-          <ProductCard
-            image={Jeans}
-            productRate={ProductRate}
-            title="Calça Jeans Preta Skinny"
-            price="210"
-          />
-
-          <ProductCard
-            image={Jeans}
-            productRate={ProductRate}
-            title="Calça Jeans Preta Skinny"
-            price="210"
-          />
+          {productsList && productsList.length > 0 ?
+            productsList.map((product, index) => (
+            <NavLink to={`/produto-detalhes/${product.id}`} className="w-[31%]">
+              <ProductCard
+                key={index}
+                image={`http://localhost:8001/assets/products-images/${product.image}`}
+                productRate={ProductRate}
+                title={product.name}
+                price={product.price}
+              />
+            </NavLink>
+            ))
+            :
+            <p>Carregando...</p>
+          }
         </div>
         <hr className="text-gray-300 mt-6 mb-6" />
         <div className="flex justify-between">

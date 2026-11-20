@@ -6,6 +6,7 @@ async function productUpdateController(request, response) {
 
     const product = await Product.update({
         name: body.name,
+        category: body.category,
         description: body.description,
         price: body.price,
         stock: body.stock

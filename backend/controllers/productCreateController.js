@@ -6,6 +6,7 @@ async function productCreateController(request, response) {
 
     const data = {
         name: request.body.name,
+        category: request.body.category || "Moda",
         description: request.body.description,
         price: request.body.price,
         stock: request.body.stock,
