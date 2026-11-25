@@ -1,23 +1,39 @@
 import Product from "../../../models/product.js"
 
 async function listController(request, response) {
-  let limit = 10
-  let orderBy = 'DESC'
+  const maxLimitPerPage = 30
+  const minLimitPerPage = 4
+  let limit = minLimitPerPage
+  let page = parseInt(request.query.page) ? parseInt(request.query.page) : 1
+  let orderBy = request.query.orderby ? request.query.orderby : 'DESC'
   
-  if (request.query.limit && request.query.limit) {
-    limit = Number.parseInt(request.query.limit)
+  if (request.query.limit && request.query.limit > maxLimitPerPage) {
+    limit = maxLimitPerPage
   }
 
-  if (request.query.orderby && (request.query.orderby === 'DESC' || request.query.orderby === 'ASC')) {
-    orderBy = request.query.orderby
+  if (request.query.limit && request.query.limit >= minLimitPerPage && request.query.limit <= maxLimitPerPage) {
+    limit = parseInt(request.query.limit)
   }
 
-  const products = await Product.findAll({
+  const offset = (page - 1) * limit
+
+  const items = await Product.findAndCountAll({
     order: [
       ['id', orderBy]
     ],
     limit: limit,
+    offset: offset
   })
+
+  const products = {
+    data: items.rows,
+    pagination: {
+      total: items.count,
+      totalPage: Math.ceil(items.count / limit),
+      current: page,
+      limit
+    }
+  }
 
   return response.json(products)
 }

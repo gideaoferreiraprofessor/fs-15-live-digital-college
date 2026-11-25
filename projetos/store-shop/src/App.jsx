@@ -5,6 +5,7 @@ import { InputGroup } from '@primereact/ui/inputgroup'
 import { InputText } from '@primereact/ui/inputtext';
 import AppAlertTop from "./components/alert-top/AppAlertTop"
 import AppFooter from "./components/footer/AppFooter"
+import { NavLink } from 'react-router';
 
 function App() {
   return <div className='w-full'>
@@ -12,7 +13,9 @@ function App() {
     <div className='flex justify-center'>
       <header className='flex w-300'> 
         <div className='w-full flex justify-between items-center py-4'>
-          <h3 className='logo-brand text-3xl'>SHOP.CO</h3>
+          <NavLink to="/">
+            <h3 className='logo-brand text-3xl'>SHOP.CO</h3>
+          </NavLink>
           <div className='flex items-center'>
             <AppMenu /> 
             <form className='w-150'>

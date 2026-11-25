@@ -2,17 +2,30 @@ import ProductCard from "../../../components/product/card/ProductCard";
 import ProductRate from "../../../assets/images/products/product-rate.png"
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router"
+import { Paginator } from '@primereact/ui/paginator';
+import { AngleDoubleLeft } from '@primeicons/react/angle-double-left';
+import { AngleDoubleRight } from '@primeicons/react/angle-double-right';
+import { AngleLeft } from '@primeicons/react/angle-left';
+import { AngleRight } from '@primeicons/react/angle-right';
+import { EllipsisH } from '@primeicons/react';
 
 function ListProducts() {
 
   const [productsList, setProductsList] = useState([])
-  const limit = 15
+  const [pagination, setPagination] = useState({})
+  let perPage = 15
+  let orderBy = "DESC"
   
-  async function fetchProducts() {
+  async function fetchProducts(page=1, limit=perPage, orderby=orderBy) {
 
-    const request = await fetch(`http://localhost:8001/store/products?limit=${limit}&orderby=DESC`)
+    const request = await fetch(`http://localhost:8001/store/products?limit=${limit}&orderby=${orderby}&page=${page}`)
     const response = await request.json()
-    setProductsList(response)
+    setProductsList(response.data)
+    setPagination(response.pagination)
+  }
+
+  function setPage(page) {
+    fetchProducts(page)
   }
 
   useEffect(() => {
@@ -27,7 +40,9 @@ function ListProducts() {
         <div className="mb-4 flex justify-between">
           <h1>Todos os produtos</h1>
           <div className="flex gap-6">
-            <p className="text-sm!">Mostrando 1 - {limit} de 100 produtos</p>
+            <p className="text-sm!">
+              Mostrando {(pagination.current - 1) * perPage === 0 ? 1 : (pagination.current - 1) * perPage} - {perPage * pagination.current > pagination.total ? pagination.total : perPage * pagination.current} de {pagination.total} produtos
+            </p>
             <p className="text-sm!">Ordenar por: </p>
           </div>
         </div>
@@ -49,11 +64,44 @@ function ListProducts() {
           }
         </div>
         <hr className="text-gray-300 mt-6 mb-6" />
-        <div className="flex justify-between">
-          <button>SETA PARA ESQUERDA</button>
-          <div> numeros das paginas</div>
-          <button>SETA PARA DIREITA</button>
-        </div>
+      <Paginator.Root
+        className="mt-4"
+        total={pagination.total}
+        itemsPerPage={pagination.limit}
+        onPageChange={(event) => setPage(event.value)}
+      >
+        <Paginator.Content>
+          <Paginator.First>
+            <AngleDoubleLeft />
+          </Paginator.First>
+          <Paginator.Prev>
+            <AngleLeft />
+          </Paginator.Prev>
+
+          <Paginator.Pages>
+            {
+              ({paginator}) =>
+                paginator?.pages.map((item, index) =>
+                  item.type === 'page' ? (
+                    <Paginator.Page key={index} value={item.value}/>
+                  ) : (
+                      <Paginator.Ellipsis key={index} >
+                        <EllipsisH />
+                      </Paginator.Ellipsis>
+                  )
+                )
+            }
+          </Paginator.Pages>
+
+
+          <Paginator.Next>
+            <AngleRight />
+          </Paginator.Next>
+          <Paginator.Last>
+            <AngleDoubleRight />
+          </Paginator.Last>
+        </Paginator.Content>
+      </Paginator.Root>
       </div>
     </>
   )

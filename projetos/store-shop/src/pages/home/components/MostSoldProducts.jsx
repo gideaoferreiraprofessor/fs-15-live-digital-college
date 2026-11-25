@@ -12,7 +12,7 @@ function MostSoldProducts() {
     const limit = 4
     const request = await fetch(`http://localhost:8001/store/products?limit=${limit}&orderby=ASC`)
     const response = await request.json()
-    setProductsList(response)
+    setProductsList(response.data)
   }
 
   useEffect(() => {
@@ -41,7 +41,9 @@ function MostSoldProducts() {
         }
         </div>
         <div className="w-full mt-10 flex justify-center">
-          <button className="border rounded-4xl! py-3 px-20 border-gray-300 cursor-pointer">Ver Todos</button>
+          <NavLink to="produtos">
+            <button className="border rounded-4xl! py-3 px-20 border-gray-300 cursor-pointer">Ver Todos</button>
+          </NavLink>
         </div>
       </section>
   );
