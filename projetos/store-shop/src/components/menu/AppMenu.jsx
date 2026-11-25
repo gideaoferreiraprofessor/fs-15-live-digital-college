@@ -15,8 +15,15 @@ function AppMenu() {
           </NavLink>
         </Menu.Root>
         <Menu.Root>
+          <NavLink to="/produtos">
+            <Menu.Item>
+              Produtos
+            </Menu.Item>
+          </NavLink>
+        </Menu.Root>
+        <Menu.Root>
           <Menu.Item>
-            Em promoção
+            Promoção
           </Menu.Item>
         </Menu.Root>
         <Menu.Root>

@@ -12,7 +12,7 @@ function NewProducs() {
     const limit = 4
     const request = await fetch(`http://localhost:8001/store/products?limit=${limit}`)
     const response = await request.json()
-    setProductsList(response)
+    setProductsList(response.data)
   }
 
   useEffect(() => {

@@ -14,7 +14,7 @@ const Product = sequelize.define('Product', {
     category: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "Moda"
+        defaultValue: " "
     },
     description: {
         type: DataTypes.TEXT('long'),

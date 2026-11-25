@@ -3,7 +3,6 @@ import { DataTable } from '@primereact/ui/datatable';
 import { Button } from '@primereact/ui/button';
 import { Drawer } from '@primereact/ui/drawer';
 import { Times } from '@primeicons/react/times';
-import { ExclamationTriangle } from '@primeicons/react/exclamation-triangle'
 import { Plus } from '@primeicons/react/plus';
 import { Textarea } from '@primereact/ui/textarea';
 import { InputText } from '@primereact/ui/inputtext';
@@ -12,10 +11,18 @@ import { Label } from '@primereact/ui/label';
 import { useNavigate } from "react-router";
 import { Dialog } from '@primereact/ui/dialog';
 import { Message } from '@primereact/ui/message';
+import { Paginator } from '@primereact/ui/paginator';
+import { ExclamationTriangle } from '@primeicons/react/exclamation-triangle'
+import { AngleDoubleLeft } from '@primeicons/react/angle-double-left';
+import { AngleDoubleRight } from '@primeicons/react/angle-double-right';
+import { AngleLeft } from '@primeicons/react/angle-left';
+import { AngleRight } from '@primeicons/react/angle-right';
+import { EllipsisH } from '@primeicons/react';
 
 function ProductsList() {
   const navigation = useNavigate()
   const [products, setProducts] = useState([])
+  const [pagination, setPagination] = useState({})
   const [createProductDrawer, setCreateProductDrawer] = useState(false)
   const [productDelete, setProductDelete] = useState({})
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false)
@@ -27,11 +34,11 @@ function ProductsList() {
   const [image, setImage] = useState()
 
 
-  async function listProducts() {
-    const request = await fetch('http://localhost:8001/products/')
+  async function listProducts(page=1, limit=10) {
+    const request = await fetch(`http://localhost:8001/products/?limit=${limit}&page=${page}`)
     const response = await request.json()
-    setProducts(response)
-    console.log(response)
+    setProducts(response.data)
+    setPagination(response.pagination)
   }
 
   function openCreateProductDrawer() {
@@ -86,7 +93,7 @@ function ProductsList() {
         }
       })
 
-      const response = await request.json()
+      await request.json()
 
       toggleDeleteProductModal()
       await listProducts()
@@ -95,7 +102,12 @@ function ProductsList() {
     }
   }
 
+  function setPage(page) {
+    listProducts(page)
+  }
+
   useEffect(() => {
+    // eslint-disable-next-line
     listProducts()
   }, [])
   
@@ -182,8 +194,8 @@ function ProductsList() {
                   <DataTable.Cell>
                     {item.name}
                   </DataTable.Cell>
-                  <DataTable.Cell>
-                    {item.description}
+                  <DataTable.Cell className="w-6/12">
+                    {item.description.slice(0, 250)}
                   </DataTable.Cell>
                   <DataTable.Cell>
                     {item.price}
@@ -191,9 +203,9 @@ function ProductsList() {
                   <DataTable.Cell>
                     {item.stock}
                   </DataTable.Cell>
-                  <DataTable.Cell>
-                    <button className="bg-blue-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => productDetails(item.id)}>Ver</button>
-                    <button className="bg-red-400! px-3 py-1 rounded cursor-pointer text-white" onClick={() => deleteProductModal(item)}>Deletar</button>
+                  <DataTable.Cell className="w-1/12">
+                    <button className="bg-blue-400! px-3 py-1 mx-1 rounded cursor-pointer text-white" onClick={() => productDetails(item.id)}>Ver</button>
+                    <button className="bg-red-400! px-3 py-1 mx-1 rounded cursor-pointer text-white" onClick={() => deleteProductModal(item)}>Deletar</button>
                   </DataTable.Cell>
                 </DataTable.Row>
               )}
@@ -201,6 +213,45 @@ function ProductsList() {
           </DataTable.Table>
         </DataTable.TableContainer>
       </DataTable.Root>
+
+      <Paginator.Root
+        className="mt-4"
+        total={pagination.total}
+        itemsPerPage={pagination.limit}
+        onPageChange={(event) => setPage(event.value)}
+      >
+        <Paginator.Content>
+          <Paginator.First>
+            <AngleDoubleLeft />
+          </Paginator.First>
+          <Paginator.Prev>
+            <AngleLeft />
+          </Paginator.Prev>
+
+          <Paginator.Pages>
+            {
+              ({paginator}) =>
+                paginator?.pages.map((item, index) =>
+                  item.type === 'page' ? (
+                    <Paginator.Page key={index} value={item.value}/>
+                  ) : (
+                      <Paginator.Ellipsis key={index} >
+                        <EllipsisH />
+                      </Paginator.Ellipsis>
+                  )
+                )
+            }
+          </Paginator.Pages>
+
+
+          <Paginator.Next>
+            <AngleRight />
+          </Paginator.Next>
+          <Paginator.Last>
+            <AngleDoubleRight />
+          </Paginator.Last>
+        </Paginator.Content>
+      </Paginator.Root>
 
       {/* Criar produto */}
       <Drawer.Root position="right" open={createProductDrawer} onOpenChange={openCreateProductDrawer}>
