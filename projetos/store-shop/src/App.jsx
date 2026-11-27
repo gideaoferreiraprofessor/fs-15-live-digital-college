@@ -6,8 +6,18 @@ import { InputText } from '@primereact/ui/inputtext';
 import AppAlertTop from "./components/alert-top/AppAlertTop"
 import AppFooter from "./components/footer/AppFooter"
 import { NavLink } from 'react-router';
+import { Badge } from '@primereact/ui/badge';
+import { OverlayBadge } from '@primereact/ui/overlaybadge';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  const [productsCart, setProductCart] = useState([])
+
+  useEffect(() => {
+    console.log("Total de itens: ", productsCart)
+  }, [productsCart])
+
   return <div className='w-full'>
     <AppAlertTop />
     <div className='flex justify-center'>
@@ -29,10 +39,12 @@ function App() {
             </form>
           </div>
           <div className="actions flex items-center gap-2">
-            <div className="cart">
+            <OverlayBadge>
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 1024 1024">
-                <path fill="currentColor" d="M1015.66 284a31.82 31.82 0 0 0-25.998-13.502H310.526l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.569 0-31.777 14.224-31.777 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.591 23.183h431.968c13.409 0 25.376-8.4 29.905-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM815.026 720.194H429.539L328.387 334.066h616.096zM752.003 848.13c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80" /></svg>
-            </div>
+                <path fill="currentColor" d="M1015.66 284a31.82 31.82 0 0 0-25.998-13.502H310.526l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.569 0-31.777 14.224-31.777 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.591 23.183h431.968c13.409 0 25.376-8.4 29.905-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM815.026 720.194H429.539L328.387 334.066h616.096zM752.003 848.13c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80" />
+              </svg>
+              <Badge shape="circle">{productsCart.length}</Badge>
+            </OverlayBadge>
             <div className="profile-account">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 21 21">
                 <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8" /><path d="M14.5 13.5c-.662-2.274-3.2-3.025-6-3.025c-2.727 0-5.27.869-6 3.025" /><path d="M8.5 2.5a3 3 0 0 1 3 3v2a3 3 0 0 1-6 0v-2a3 3 0 0 1 3-3" /></g></svg>
@@ -43,7 +55,7 @@ function App() {
     </div>
     <div className='flex justify-center mb-8'>
       <main className='w-300'>
-        <Outlet />
+        <Outlet context={{ setProductCart }} />
       </main>
     </div>
     <AppFooter />
