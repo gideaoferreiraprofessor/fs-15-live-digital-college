@@ -10,11 +10,13 @@ import ProductRate from "../../assets/images/products/product-rate.png";
 import CheckGreenIcon from "../../assets/images/icones/check.png"
 import { Tabs } from 'primereact/tabs';
 import { Select } from '@primereact/ui/select';
+import { useOutletContext } from "react-router";
 
 function ProductDetails() {
   const params = useParams();
   const [product, setProduct] = useState({});
-  const [totalItems, setTotalItems] = useState(0);
+  const [totalItems, setTotalItems] = useState([]);
+  const { setProductCart } = useOutletContext()
 
   const reviews = [
     {
@@ -55,10 +57,10 @@ function ProductDetails() {
     }
   ]
 
-const sortBy = [
-    { label: 'Mais recentes', value: 'asc' },
-    { label: 'Mais antigos', value: 'desc' },
-];
+  const sortBy = [
+      { label: 'Mais recentes', value: 'asc' },
+      { label: 'Mais antigos', value: 'desc' },
+  ];
 
   async function fetchProductDetailsById() {
     const request = await fetch(
@@ -68,20 +70,23 @@ const sortBy = [
     setProduct(response);
   }
 
-  function incrementItem() {
-    setTotalItems(totalItems + 1);
+  function incrementItem(item) {
+    setTotalItems((prev) => [...prev, item]);
   }
 
   function decrementItem() {
-    if (totalItems <= 0) {
-      setTotalItems(0);
-      return;
-    }
-    setTotalItems(totalItems - 1);
+    setTotalItems((prev) => {
+      prev.pop()
+      return [...prev]
+    });
+  }
+  
+  function addCart() {
+    setProductCart(totalItems)
   }
 
   useEffect(() => {
-    //eslint-disable-next-line
+    //eslint-disable-next-line  
     fetchProductDetailsById();
   }, []);
 
@@ -165,16 +170,18 @@ const sortBy = [
               <div className="flex gap-4">
                 <div className="bg-gray-100 px-4 py-2 rounded-3xl flex justify-between w-3/12 items-center">
                   <button className="cursor-pointer" onClick={decrementItem}>
-                    {" "}
                     <Minus size={18} />{" "}
                   </button>
-                  <p>{totalItems}</p>
-                  <button className="cursor-pointer" onClick={incrementItem}>
+                  <p>{totalItems.length}</p>
+                  <button className="cursor-pointer" onClick={() => incrementItem(product)}>
                     {" "}
                     <Plus size={18} />{" "}
                   </button>
                 </div>
-                <button className="bg-black text-white rounded-3xl px-3 py-2 w-9/12 cursor-pointer">
+                <button
+                  className="bg-black text-white rounded-3xl px-3 py-2 w-9/12 cursor-pointer"
+                  onClick={addCart}
+                >
                   Adicionar ao Carrinho
                 </button>
               </div>

@@ -1,5 +1,4 @@
 import "./main.css"
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { PrimeReactProvider } from '@primereact/core';
 import Material from '@primeuix/themes/material';
@@ -18,9 +17,7 @@ const primereact = {
 };
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <PrimeReactProvider  {...primereact} preflight={false}>
-      <RouterProvider router={router} />
-    </PrimeReactProvider>
-  </StrictMode>,
+  <PrimeReactProvider  {...primereact} preflight={false}>
+    <RouterProvider router={router} />
+  </PrimeReactProvider>
 );
